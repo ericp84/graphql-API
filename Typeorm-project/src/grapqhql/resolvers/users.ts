@@ -43,6 +43,7 @@ export class UserResolver {
       .from(User)
       .execute();
   }
+
   ///////// MUTATION DELETE ONE USER ///////////
   @Mutation(() => User)
   async deleteOneUser(@Arg("id", () => ID) id: number): Promise<any> {
@@ -53,6 +54,7 @@ export class UserResolver {
       .where("id = :id", { id })
       .execute();
   }
+
   /////// MUTATION UPDATE USER //////////
   @Mutation(() => User)
   async updateUser(
@@ -75,12 +77,14 @@ export class UserResolver {
     }
     return await dataSource.getRepository(User).save(UserToUpdate);
   }
+
   ///////// QUERY FIND ALL USERS /////////////
   @Query(() => [User], { nullable: true })
   async Users(): Promise<User[]> {
     const Users = await dataSource.getRepository(User).find({});
     return Users;
   }
+
   ///////// QUERY FIND ONE USER ///////////
   @Query(() => User, { nullable: true })
   async User(@Arg("id", () => ID) id: number): Promise<User | null> {

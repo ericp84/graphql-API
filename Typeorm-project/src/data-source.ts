@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../src/grapqhql/entities/user";
 import * as dotenv from "dotenv";
+import { Timetracking } from "./grapqhql/entities/timetracking";
 dotenv.config();
 
 const dataSource = new DataSource({
@@ -13,7 +14,7 @@ const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [User],
+  entities: [User, Timetracking],
 });
 
 export default dataSource;

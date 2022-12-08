@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
+import { Timetracking } from "./timetracking";
 
 @Entity()
 @ObjectType()
@@ -16,6 +17,9 @@ export class User {
   @Column({ nullable: true })
   @Field({ nullable: true })
   password: string;
+
+  @OneToMany(() => Timetracking, "timetracking")
+  timetrackings: Timetracking[];
 }
 @InputType()
 export class UserInput {
