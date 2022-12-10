@@ -17,8 +17,13 @@ export class Timetracking {
   @Field({ nullable: true })
   end: string;
 
-  @ManyToOne(() => User, "user")
-  users: User;
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  userId: number;
+
+  @ManyToOne(() => User, "timetrackings", { onDelete: "CASCADE" })
+  @Field(() => User, { nullable: true })
+  user: User;
 }
 
 @InputType()
@@ -28,4 +33,7 @@ export class TimetrackingInput {
 
   @Field()
   end: string;
+
+  // @Field()
+  // userId: number;
 }

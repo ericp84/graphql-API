@@ -18,7 +18,8 @@ export class User {
   @Field({ nullable: true })
   password: string;
 
-  @OneToMany(() => Timetracking, "timetracking")
+  @OneToMany(() => Timetracking, "user")
+  @Field(() => [Timetracking])
   timetrackings: Timetracking[];
 }
 @InputType()

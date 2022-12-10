@@ -81,8 +81,9 @@ export class UserResolver {
   ///////// QUERY FIND ALL USERS /////////////
   @Query(() => [User], { nullable: true })
   async Users(): Promise<User[]> {
-    const Users = await dataSource.getRepository(User).find({});
-    return Users;
+    return await dataSource
+      .getRepository(User)
+      .find({ relations: ["timetrackings"] });
   }
 
   ///////// QUERY FIND ONE USER ///////////
