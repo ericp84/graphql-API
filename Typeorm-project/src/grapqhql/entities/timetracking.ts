@@ -34,6 +34,6 @@ export class TimetrackingInput {
   @Field()
   end: string;
 
-  // @Field()
-  // userId: number;
+  @Field()
+  userId: number;
 }
