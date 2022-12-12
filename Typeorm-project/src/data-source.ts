@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { User } from "../src/grapqhql/entities/user";
 import * as dotenv from "dotenv";
 import { Timetracking } from "./grapqhql/entities/timetracking";
+import { Task } from "./grapqhql/entities/task";
 dotenv.config();
 
 const dataSource = new DataSource({
@@ -14,7 +15,7 @@ const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [User, Timetracking],
+  entities: [User, Timetracking, Task],
 });
 
 export default dataSource;
