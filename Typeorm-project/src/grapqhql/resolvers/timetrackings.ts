@@ -23,13 +23,46 @@ export class TimetrackingResolver {
   }
   ///////// MUTATION DELETE ONE /////////
   @Mutation(() => Timetracking)
-  async deleteOneTimetracking(@Arg("id", () => ID) id: number): Promise<any> {
+  async deleteOneTimetracking(
+    @Arg("id", () => ID) id: number,
+    @Arg("end") end: string,
+    @Arg("start") start: string
+  ): Promise<any> {
     return await dataSource
       .getRepository(Timetracking)
       .createQueryBuilder()
-      .delete()
+      .update(Timetracking)
       .where("id = :id", { id })
       .execute();
+  }
+  ///////// MUTATION UPDATE ONE /////////
+  @Mutation(() => Timetracking)
+  async updateOneTimeTracking(
+    @Arg("id", () => ID) id: number,
+    @Arg("start") start: string,
+    @Arg("end") end: string
+  ): Promise<Timetracking | null> {
+    const tt = await dataSource
+      .getRepository(Timetracking)
+      .findOne({ where: { id } });
+
+    if (!tt) {
+      return null;
+    }
+    if (start != null) {
+      tt.start = start;
+    }
+    if (end != null) {
+      tt.end = end;
+    }
+
+    return await dataSource.getRepository(Timetracking).save(tt);
+    // return await dataSource
+    //   .getRepository(Timetracking)
+    //   .createQueryBuilder()
+    //   .update()
+    //   .where("id = :id", { id })
+    //   .execute();
   }
   ///////// QUERY FIND ALL TimetrackingS /////////////
   @Query(() => [Timetracking], { nullable: true })

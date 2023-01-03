@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { User } from "./user";
@@ -32,13 +34,22 @@ export class Timetracking {
   @Field({ nullable: true })
   isDeductible: boolean;
 
-  @Column({ nullable: true })
+  @CreateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
   @Field({ nullable: true })
-  createdAt: string;
+  createdAt: Date;
 
-  @Column({ nullable: true })
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
   @Field({ nullable: true })
-  updatedAt: string;
+  updatedAt: Date;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
