@@ -6,6 +6,8 @@ import {
   ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
+  JoinTable,
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { User } from "./user";
@@ -51,19 +53,23 @@ export class Timetracking {
   @Field({ nullable: true })
   updatedAt: Date;
 
-  @Column({ nullable: true })
+  @DeleteDateColumn()
   @Field({ nullable: true })
-  deletedAt: string;
+  deletedAt: Date;
 
   @Column({ nullable: true })
   @Field(() => ID, { nullable: true })
   userId: number;
 
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  taskId: number;
+
   @ManyToOne(() => User, "timetrackings", { onDelete: "CASCADE" })
   @Field(() => User, { nullable: true })
   user: User;
 
-  @ManyToMany(() => Task, "timetrackings")
+  @ManyToOne(() => Task, "timetrackings")
   @Field(() => Task, { nullable: true })
   task: Task;
 }
@@ -78,4 +84,7 @@ export class TimetrackingInput {
 
   @Field()
   userId: number;
+
+  @Field()
+  taskId: number;
 }

@@ -4,9 +4,12 @@ import {
   Column,
   OneToMany,
   ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  JoinTable,
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
-import { IsEmail, Length } from "class-validator";
 import { Timetracking } from "./timetracking";
 
 @Entity()
@@ -16,7 +19,7 @@ export class Task {
   @Field(() => ID, { nullable: true })
   id: number;
 
-  @Column({ nullable: true, unique: true })
+  @Column({ nullable: true })
   @Field({ nullable: true })
   label: string;
 
@@ -24,21 +27,34 @@ export class Task {
   @Field({ nullable: true })
   description: string;
 
-  @Column({ nullable: true })
-  @Field({ nullable: true })
-  createdAt: string;
+  // @Column({ nullable: true })
+  // @Field(() => ID, { nullable: true })
+  // timetrackingId: number;
 
-  @Column({ nullable: true })
+  @CreateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
   @Field({ nullable: true })
-  updatedAt: string;
+  createdAt: Date;
 
-  @Column({ nullable: true })
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
+  @Field({ nullable: true })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ nullable: true })
   @Field({ nullable: true })
   deletedAt: string;
 
-  @ManyToMany(() => Timetracking, "task")
+  @OneToMany(() => Timetracking, "task")
   @Field(() => Timetracking, { nullable: true })
-  timetrackings: Timetracking;
+  timetrackings: Timetracking[];
 }
 @InputType()
 export class TaskInput {

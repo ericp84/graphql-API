@@ -1,7 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
 import { Timetracking } from "./timetracking";
+import { count } from "console";
 
 @Entity()
 @ObjectType()
@@ -18,17 +27,26 @@ export class Customer {
   @Field({ nullable: true })
   isFavorite: boolean;
 
-  @Column({ nullable: true })
+  @CreateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
   @Field({ nullable: true })
-  createdAt: string;
+  createdAt: Date;
 
-  @Column({ nullable: true })
+  @UpdateDateColumn({
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+    nullable: true,
+  })
   @Field({ nullable: true })
-  updatedAt: string;
+  updatedAt: Date;
 
-  @Column({ nullable: true })
+  @DeleteDateColumn()
   @Field({ nullable: true })
-  deletedAt: string;
+  deletedAt: Date;
 }
 @InputType()
 export class CustomerInput {
