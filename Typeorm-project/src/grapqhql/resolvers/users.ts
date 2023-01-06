@@ -83,12 +83,15 @@ export class UserResolver {
   async Users(): Promise<User[]> {
     return await dataSource
       .getRepository(User)
-      .find({ relations: ["timetrackings"] });
+      .find({ relations: ["timetrackings", "timetrackings.task"] });
   }
 
   ///////// QUERY FIND ONE USER ///////////
   @Query(() => User, { nullable: true })
   async User(@Arg("id", () => ID) id: number): Promise<User | null> {
-    return await dataSource.getRepository(User).findOne({ where: { id } });
+    return await dataSource.getRepository(User).findOne({
+      where: { id },
+      relations: ["timetrackings", "timetrackings.task"],
+    });
   }
 }

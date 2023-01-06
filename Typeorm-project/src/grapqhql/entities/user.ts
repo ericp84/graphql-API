@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { IsEmail, Length } from "class-validator";
 import { Timetracking } from "./timetracking";
+import { Task } from "./task";
 
 @Entity()
 @ObjectType()
@@ -9,6 +17,10 @@ export class User {
   @PrimaryGeneratedColumn()
   @Field(() => ID, { nullable: true })
   id: number;
+
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  timetrackingId: number;
 
   @Column({ nullable: true, unique: true })
   @Field({ nullable: true })
@@ -18,10 +30,16 @@ export class User {
   @Field({ nullable: true })
   password: string;
 
-  @OneToMany(() => Timetracking, "user")
+  @OneToMany(() => Timetracking, "user", { nullable: true })
   @Field(() => [Timetracking])
   timetrackings: Timetracking[];
+
+  @Field(() => [Task])
+  @ManyToMany(() => Task, (task) => task.users, { nullable: true })
+  @JoinTable()
+  tasks: Task[];
 }
+
 @InputType()
 export class UserInput {
   @Field()

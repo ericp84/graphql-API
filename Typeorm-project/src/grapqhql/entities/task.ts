@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { Timetracking } from "./timetracking";
+import { User } from "./user";
 
 @Entity()
 @ObjectType()
@@ -27,9 +28,9 @@ export class Task {
   @Field({ nullable: true })
   description: string;
 
-  // @Column({ nullable: true })
-  // @Field(() => ID, { nullable: true })
-  // timetrackingId: number;
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  timetrackingId: number;
 
   @CreateDateColumn({
     type: "timestamp",
@@ -52,12 +53,20 @@ export class Task {
   @Field({ nullable: true })
   deletedAt: string;
 
-  @OneToMany(() => Timetracking, "task")
-  @Field(() => Timetracking, { nullable: true })
+  @OneToMany(() => Timetracking, (timetracking) => timetracking.task)
+  @Field(() => [Timetracking], { nullable: true })
   timetrackings: Timetracking[];
+
+  @Field(() => [User])
+  @ManyToMany(() => User, (user) => user.tasks, { nullable: true })
+  @JoinTable()
+  users: User;
 }
 @InputType()
 export class TaskInput {
+  @Field({ nullable: true })
+  timetrackingId: number;
+
   @Field()
   label: string;
 

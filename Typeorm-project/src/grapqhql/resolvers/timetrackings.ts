@@ -23,11 +23,7 @@ export class TimetrackingResolver {
   }
   ///////// MUTATION DELETE ONE /////////
   @Mutation(() => Timetracking)
-  async deleteOneTimetracking(
-    @Arg("id", () => ID) id: number,
-    @Arg("end") end: string,
-    @Arg("start") start: string
-  ): Promise<any> {
+  async deleteOneTimetracking(@Arg("id", () => ID) id: number): Promise<any> {
     return await dataSource
       .getRepository(Timetracking)
       .createQueryBuilder()
@@ -78,6 +74,6 @@ export class TimetrackingResolver {
   ): Promise<Timetracking | null> {
     return await dataSource
       .getRepository(Timetracking)
-      .findOne({ where: { id } });
+      .findOne({ where: { id }, relations: ["user", "task"] });
   }
 }

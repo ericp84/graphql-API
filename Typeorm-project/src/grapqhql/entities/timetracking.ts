@@ -69,7 +69,7 @@ export class Timetracking {
   @Field(() => User, { nullable: true })
   user: User;
 
-  @ManyToOne(() => Task, "timetrackings")
+  @ManyToOne(() => Task, (task) => task.timetrackings)
   @Field(() => Task, { nullable: true })
   task: Task;
 }

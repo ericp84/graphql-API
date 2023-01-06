@@ -16,9 +16,11 @@ async function bootstrap() {
     schema,
   });
 
-  const { url } = await server.listen(PORT);
-  console.log(`Server is running, GraphQL Playground available at ${url}`);
   await datasource.initialize();
-  console.log("connected to BDD !!!!");
+  console.log("✨ connection to DB established ✨");
+  const { url } = await server.listen(PORT);
+  console.log(
+    `🖥️  Server is running, GraphQL Playground available at ${url} 🖥️`
+  );
 }
 bootstrap();
