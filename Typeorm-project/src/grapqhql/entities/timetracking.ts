@@ -12,6 +12,7 @@ import {
 import { ObjectType, Field, ID, InputType } from "type-graphql";
 import { User } from "./user";
 import { Task } from "./task";
+import { Customer } from "./customer";
 
 @Entity()
 @ObjectType()
@@ -65,6 +66,10 @@ export class Timetracking {
   @Field(() => ID, { nullable: true })
   taskId: number;
 
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  customerId: number;
+
   @ManyToOne(() => User, "timetrackings", { onDelete: "CASCADE" })
   @Field(() => User, { nullable: true })
   user: User;
@@ -72,6 +77,10 @@ export class Timetracking {
   @ManyToOne(() => Task, (task) => task.timetrackings)
   @Field(() => Task, { nullable: true })
   task: Task;
+
+  @ManyToOne(() => Customer, (customer) => customer.timetrackings)
+  @Field(() => Customer, { nullable: true })
+  customer: Customer;
 }
 
 @InputType()
@@ -87,4 +96,7 @@ export class TimetrackingInput {
 
   @Field()
   taskId: number;
+
+  @Field()
+  customerId: number;
 }

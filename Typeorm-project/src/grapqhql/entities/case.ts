@@ -6,14 +6,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
 } from "typeorm";
-import { Case } from "./case";
 import { ObjectType, Field, ID, InputType } from "type-graphql";
-import { Timetracking } from "./timetracking";
+import { Customer } from "./customer";
 
 @Entity()
 @ObjectType()
-export class Customer {
+export class Case {
   @PrimaryGeneratedColumn()
   @Field(() => ID, { nullable: true })
   id: number;
@@ -21,10 +21,6 @@ export class Customer {
   @Column({ nullable: true, unique: true })
   @Field({ nullable: true })
   name: string;
-
-  @Column({ nullable: true })
-  @Field({ nullable: true })
-  isFavorite: boolean;
 
   @CreateDateColumn({
     type: "timestamp",
@@ -47,20 +43,12 @@ export class Customer {
   @Field({ nullable: true })
   deletedAt: Date;
 
-  @Column({ nullable: true })
-  @Field(() => ID, { nullable: true })
-  timetrackingId: number;
-
-  @OneToMany(() => Case, "customer", { nullable: true })
-  @Field(() => [Case])
-  case: Case[];
-
-  @OneToMany(() => Timetracking, "customer", { nullable: true })
-  @Field(() => [Timetracking])
-  timetrackings: Timetracking[];
+  @ManyToOne(() => Customer, "case", { nullable: true })
+  @Field(() => Customer)
+  customer: Customer;
 }
 @InputType()
-export class CustomerInput {
+export class CaseInput {
   @Field()
   name: string;
 

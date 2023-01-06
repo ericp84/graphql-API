@@ -5,12 +5,20 @@ import { buildSchema } from "type-graphql";
 import datasource from "./data-source";
 import { TimetrackingResolver } from "./grapqhql/resolvers/timetrackings";
 import { TaskResolver } from "./grapqhql/resolvers/tasks";
+import { CustomerResolver } from "./grapqhql/resolvers/customers";
+import { CaseResolver } from "./grapqhql/resolvers/cases";
 
 const PORT = process.env.PORT || 4000;
 
 async function bootstrap() {
   const schema = await buildSchema({
-    resolvers: [UserResolver, TimetrackingResolver, TaskResolver],
+    resolvers: [
+      UserResolver,
+      TimetrackingResolver,
+      TaskResolver,
+      CustomerResolver,
+      CaseResolver,
+    ],
   });
   const server = new ApolloServer({
     schema,

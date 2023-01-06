@@ -56,11 +56,6 @@ export class Task {
   @OneToMany(() => Timetracking, (timetracking) => timetracking.task)
   @Field(() => [Timetracking], { nullable: true })
   timetrackings: Timetracking[];
-
-  @Field(() => [User])
-  @ManyToMany(() => User, (user) => user.tasks, { nullable: true })
-  @JoinTable()
-  users: User;
 }
 @InputType()
 export class TaskInput {

@@ -57,14 +57,24 @@ export class TaskResolver {
   async Tasks(): Promise<Task[]> {
     return await dataSource
       .getRepository(Task)
-      .find({ relations: ["timetrackings", "timetrackings.user"] });
+      .find({
+        relations: [
+          "timetrackings",
+          "timetrackings.user",
+          "timetrackings.customer",
+        ],
+      });
   }
   ///////// QUERY FIND ONE TaskS /////////////
   @Query(() => Task, { nullable: true })
   async Task(@Arg("id", () => ID) id: number): Promise<Task | null> {
     return await dataSource.getRepository(Task).findOne({
       where: { id },
-      relations: ["timetrackings", "timetrackings.user"],
+      relations: [
+        "timetrackings",
+        "timetrackings.user",
+        "timetrackings.customer",
+      ],
     });
   }
 }
