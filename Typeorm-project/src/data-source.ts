@@ -6,6 +6,7 @@ import { Timetracking } from "./grapqhql/entities/timetracking";
 import { Task } from "./grapqhql/entities/task";
 import { Customer } from "./grapqhql/entities/customer";
 import { Case } from "./grapqhql/entities/case";
+import { Project } from "./grapqhql/entities/project";
 dotenv.config();
 
 const dataSource = new DataSource({
@@ -17,7 +18,7 @@ const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: ["query", "error"],
-  entities: [User, Timetracking, Task, Customer, Case],
+  entities: [User, Timetracking, Task, Customer, Case, Project],
 });
 
 export default dataSource;

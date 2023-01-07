@@ -18,9 +18,13 @@ export class Customer {
   @Field(() => ID, { nullable: true })
   id: number;
 
-  @Column({ nullable: true, unique: true })
+  @Column({ nullable: true })
   @Field({ nullable: true })
   name: string;
+
+  @Column({ nullable: true })
+  @Field(() => ID, { nullable: true })
+  caseId: number;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
@@ -52,7 +56,7 @@ export class Customer {
   timetrackingId: number;
 
   @OneToMany(() => Case, "customer", { nullable: true })
-  @Field(() => [Case])
+  @Field(() => [Case], { nullable: true })
   case: Case[];
 
   @OneToMany(() => Timetracking, "customer", { nullable: true })

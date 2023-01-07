@@ -52,7 +52,13 @@ export class CaseResolver {
   @Query(() => [Case], { nullable: true })
   async Cases(): Promise<Case[]> {
     return await dataSource.getRepository(Case).find({
-      relations: ["timetrackings", "timetrackings.task", "timetrackings.user"],
+      relations: [
+        "customer",
+        "project",
+        "customer.timetrackings",
+        "customer.timetrackings.user",
+        "customer.timetrackings.task",
+      ],
     });
   }
 
@@ -61,7 +67,13 @@ export class CaseResolver {
   async Case(@Arg("id", () => ID) id: number): Promise<Case | null> {
     return await dataSource.getRepository(Case).findOne({
       where: { id },
-      relations: ["timetrackings", "timetrackings.task", "timetrackings.user"],
+      relations: [
+        "customer",
+        "project",
+        "customer.timetrackings",
+        "customer.timetrackings.user",
+        "customer.timetrackings.task",
+      ],
     });
   }
 }

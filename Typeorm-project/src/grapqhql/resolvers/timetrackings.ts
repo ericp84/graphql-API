@@ -65,15 +65,30 @@ export class TimetrackingResolver {
   async Timetrackings(): Promise<Timetracking[]> {
     return await dataSource
       .getRepository(Timetracking)
-      .find({ relations: ["user", "task", "customer"] });
+      .find({
+        relations: [
+          "user",
+          "task",
+          "customer",
+          "customer.case",
+          "customer.case.project",
+        ],
+      });
   }
   ///////// QUERY FIND ONE TimetrackingS /////////////
   @Query(() => Timetracking, { nullable: true })
   async Timetracking(
     @Arg("id", () => ID) id: number
   ): Promise<Timetracking | null> {
-    return await dataSource
-      .getRepository(Timetracking)
-      .findOne({ where: { id }, relations: ["user", "task", "customer"] });
+    return await dataSource.getRepository(Timetracking).findOne({
+      where: { id },
+      relations: [
+        "user",
+        "task",
+        "customer",
+        "customer.case",
+        "customer.case.project",
+      ],
+    });
   }
 }

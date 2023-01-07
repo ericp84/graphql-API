@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
@@ -32,6 +31,22 @@ export class Timetracking {
   @Column({ nullable: true })
   @Field({ nullable: true })
   comment: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  client: string; //customer
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  case: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  project: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  work: string; //task
 
   @Column({ nullable: true })
   @Field({ nullable: true })

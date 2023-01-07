@@ -7,6 +7,7 @@ import { TimetrackingResolver } from "./grapqhql/resolvers/timetrackings";
 import { TaskResolver } from "./grapqhql/resolvers/tasks";
 import { CustomerResolver } from "./grapqhql/resolvers/customers";
 import { CaseResolver } from "./grapqhql/resolvers/cases";
+import { ProjectResolver } from "./grapqhql/resolvers/projects";
 
 const PORT = process.env.PORT || 4000;
 
@@ -18,6 +19,7 @@ async function bootstrap() {
       TaskResolver,
       CustomerResolver,
       CaseResolver,
+      ProjectResolver,
     ],
   });
   const server = new ApolloServer({
